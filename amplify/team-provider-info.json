@@ -24,12 +24,18 @@
         },
         "AdminQueries4f5d737e": {
           "deploymentBucketName": "amplify-twittercommunity-dev-215735-deployment",
-          "s3Key": "amplify-builds/AdminQueries4f5d737e-6a59594732356b757055-build.zip"
+          "s3Key": "amplify-builds/AdminQueries4f5d737e-66732f50707059627456-build.zip"
         }
       },
       "api": {
         "twittercommunity": {},
         "AdminQueries": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3dv95u8ec3gol",
+          "type": "manual"
+        }
       }
     }
   }

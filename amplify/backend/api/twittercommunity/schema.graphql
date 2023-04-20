@@ -4,5 +4,6 @@ type Tweet @model @auth(rules: [
 ]) {
   content: String!
   community: String!
+
 }
 

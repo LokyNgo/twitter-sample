@@ -20,6 +20,7 @@ app.use(awsServerlessExpressMiddleware.eventContext());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'OPTIONS,POST,GET');
   next();
 });
 
@@ -102,6 +103,9 @@ app.post('/addGroupAndJoinMe', async (req, res, next) => {
 
 app.get('/listGroups', async (req, res, next) => {
   try {
+
+    console.log('listGroups()');
+
     let response;
     if (req.query.token) {
       response = await listGroups(req.query.limit || 25, req.query.token);
@@ -168,4 +172,3 @@ app.listen(3000, () => {
 });
 
 module.exports = app;
-JavaScript
