@@ -2,41 +2,12 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"11.0.5\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
-    "GROUP": {
-      "Type": "String",
-      "Default": ""
-    },
-    "modules": {
-      "Type": "String",
-      "Default": "",
-      "Description": "Comma-delimited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
-    },
-    "resourceName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "trigger": {
-      "Type": "String",
-      "Default": "true"
-    },
-    "functionName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "roleName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "parentResource": {
-      "Type": "String",
-      "Default": ""
-    },
-    "parentStack": {
-      "Type": "String",
-      "Default": ""
-    },
     "env": {
       "Type": "String"
+    },
+    "authtwittercommunity5cbac946UserPoolId": {
+      "Type": "String",
+      "Default": "authtwittercommunity5cbac946UserPoolId"
     },
     "deploymentBucketName": {
       "Type": "String"
@@ -67,12 +38,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "twittercommunity5cbac946PostConfirmation",
+            "AdminQueries4f5d737e",
             {
               "Fn::Join": [
                 "",
                 [
-                  "twittercommunity5cbac946PostConfirmation",
+                  "AdminQueries4f5d737e",
                   "-",
                   {
                     "Ref": "env"
@@ -87,14 +58,9 @@
             "ENV": {
               "Ref": "env"
             },
-            "MODULES": {
-              "Ref": "modules"
-            },
-            "REGION": {
-              "Ref": "AWS::Region"
-            },
-            "GROUP": {
-              "Ref": "GROUP"
+            "GROUP": "Everyone",
+            "USERPOOL": {
+              "Ref": "authtwittercommunity5cbac946UserPoolId"
             }
           }
         },
@@ -104,7 +70,7 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs16.x",
         "Timeout": 25,
         "Code": {
           "S3Bucket": {
@@ -122,12 +88,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "twittercommunity5cbac946PostConfirmation",
+            "AdminQueries4f5d737eLambdaRole",
             {
               "Fn::Join": [
                 "",
                 [
-                  "twittercommunity5cbac946PostConfirmation",
+                  "AdminQueries4f5d737eLambdaRole",
                   "-",
                   {
                     "Ref": "env"
@@ -193,6 +159,43 @@
                   }
                 ]
               }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cognito-idp:ListUsersInGroup",
+                "cognito-idp:AdminUserGlobalSignOut",
+                "cognito-idp:AdminEnableUser",
+                "cognito-idp:AdminDisableUser",
+                "cognito-idp:AdminRemoveUserFromGroup",
+                "cognito-idp:AdminAddUserToGroup",
+                "cognito-idp:AdminListGroupsForUser",
+                "cognito-idp:AdminGetUser",
+                "cognito-idp:AdminConfirmSignUp",
+                "cognito-idp:ListUsers",
+                "cognito-idp:ListGroups",
+                "cognito-idp:GetGroup",
+                "cognito-idp:CreateGroup"
+              ],
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:cognito-idp:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":userpool/",
+                    {
+                      "Ref": "authtwittercommunity5cbac946UserPoolId"
+                    }
+                  ]
+                ]
+              }
             }
           ]
         }
@@ -213,6 +216,11 @@
         ]
       }
     },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
@@ -224,11 +232,6 @@
           "LambdaExecutionRole",
           "Arn"
         ]
-      }
-    },
-    "Region": {
-      "Value": {
-        "Ref": "AWS::Region"
       }
     }
   }
